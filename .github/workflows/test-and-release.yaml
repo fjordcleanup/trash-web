@@ -1,0 +1,91 @@
+name: Test and Release
+
+on:
+  push:
+    branches:
+      - saga
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: write
+  actions: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  VERSION: ${{ github.sha }}
+
+jobs:
+  stack-name:
+    runs-on: ubuntu-24.04
+
+    outputs:
+      stackPrefix: ${{ steps.stackPrefix.outputs.stackPrefix }}
+
+    steps:
+      - name: Generate Stack ID
+        id: stackPrefix
+        run: |
+          RANDOM_STRING=`node -e "const crypto = require('crypto'); process.stdout.write(crypto.randomBytes(Math.ceil(8 * 0.5)).toString('hex').slice(0, 8));"`
+          echo "stackPrefix=fcu-${RANDOM_STRING}" >> $GITHUB_OUTPUT
+
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --no-audit
+
+      - name: Compile TypeScript
+        run: npx tsc
+
+      - name: Check source code with eslint
+        run: npx eslint ./
+
+      - name: Check if source code is properly formatted
+        run: npx prettier -c ./
+
+      - name: Run tests
+        run: npm test
+
+      - name: Ensure it builds
+        env:
+          COGNITO_USER_POOL_CLIENT_ID: some-client-id
+          COGNITO_USER_POOL_URL: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_some-pool-id
+          COGNITO_IDENTITY_POOL_ID: "eu-north-1:ae157ebe-bf8b-4054-83d4-8a8d4ff89d09"
+          AWS_REGION: eu-north-1
+          MAP_API_KEY: v1.public.some-map-api-key
+
+        run: |
+          npm run build
+          cp -L -r ./static ./build
+
+      - name: Export to-be released version
+        run: |
+          npx semantic-release --dry-run > semantic-release.out
+          echo "RELEASE_VERSION=$(cat semantic-release.out | grep 'The next release version is' | awk '{print $11}')" >> $GITHUB_ENV
+          cat semantic-release.out
+
+      - name: Semantic release
+        if: env.RELEASE_VERSION !=  ''
+        id: semantic-release
+        run: npx semantic-release
+
+      - name: Trigger deployment workflow
+        if:
+          steps.semantic-release.outcome == 'success' && env.RELEASE_VERSION
+          !=  ''
+        run: |
+          gh workflow run --ref saga deploy.yaml -F ref=${{ github.sha }}
