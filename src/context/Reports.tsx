@@ -1,4 +1,4 @@
-import type { AggregateMeta } from '@coderbyheart/aws-dynamodb-es-cqrs/aggregate/AggregateMeta'
+import type { AggregateMeta } from '@coderbyheart/aws-dynamodb-es-cqrs/aggregate'
 import type { PhotoSize, TrashType } from '@fjordcleanup/trash-proto'
 import { createContext, type ComponentChildren } from 'preact'
 import { useContext, useEffect, useState } from 'preact/hooks'

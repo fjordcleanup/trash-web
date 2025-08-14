@@ -1,4 +1,4 @@
-import type { ULID } from '@coderbyheart/aws-dynamodb-es-cqrs/event/AggregateEvent'
+import type { ULID } from '@coderbyheart/aws-dynamodb-es-cqrs/event'
 import type { TrashType } from '@fjordcleanup/trash-proto'
 import type { LngLat } from 'maplibre-gl'
 import { createContext, type ComponentChildren } from 'preact'
