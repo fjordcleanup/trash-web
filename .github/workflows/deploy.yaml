@@ -30,7 +30,6 @@ jobs:
       AWS_REGION: ${{ vars.AWS_REGION }}
       STACK_PREFIX: ${{ vars.STACK_PREFIX }}
       HOSTING_STACK_NAME: ${{ vars.STACK_PREFIX }}-hosting
-      CD_STACK_NAME: ${{ vars.STACK_PREFIX }}-hosting
       MAP_API_KEY: ${{ vars.MAP_API_KEY }}
       COGNITO_USER_POOL_CLIENT_ID: ${{ vars.COGNITO_USER_POOL_CLIENT_ID }}
       COGNITO_USER_POOL_URL: ${{ vars.COGNITO_USER_POOL_URL }}
@@ -87,7 +86,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: |-
-            arn:aws:iam::${{ env.ACCOUNT_ID }}:role/${{ env.CD_STACK_NAME }}-cd
+            arn:aws:iam::${{ env.ACCOUNT_ID }}:role/${{ env.HOSTING_STACK_NAME }}-web-app-cd
           role-session-name: gh-actions-publish
           aws-region: ${{ env.AWS_REGION }}
 
