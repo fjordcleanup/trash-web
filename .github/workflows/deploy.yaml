@@ -93,6 +93,10 @@ jobs:
       - name: Get bucket name
         run: |-
           echo "BUCKET_NAME=`aws cloudformation describe-stacks --stack-name ${{ env.HOSTING_STACK_NAME }} | jq -r '.Stacks[0].Outputs[] | select(.OutputKey == "bucketName") | .OutputValue'`" >> $GITHUB_ENV
+          if [ -z "${BUCKET_NAME}" ]; then
+            echo "BUCKET_NAME is empty."
+            exit 1
+          fi
 
       - name: Remove old files
         run: |
