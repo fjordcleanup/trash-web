@@ -11,7 +11,7 @@ import { randomUUID } from 'node:crypto'
 import path, { parse } from 'node:path'
 
 const { hostingStackName } = fromEnv({
-	hostingStackName: 'hostingStackName',
+	hostingStackName: 'HOSTING_STACK_NAME',
 })(process.env)
 
 const cloudFront = new CloudFrontClient({})
