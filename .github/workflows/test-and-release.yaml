@@ -75,7 +75,7 @@ jobs:
       - name: Export to-be released version
         run: |
           npx semantic-release --dry-run > semantic-release.out
-          echo "RELEASE_VERSION=$(cat semantic-release.out | grep 'The next release version is' | awk '{print $11}')" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$(cat semantic-release.out | grep -i 'The next release version is' | awk '{print $11}')" >> $GITHUB_ENV
           cat semantic-release.out
 
       - name: Semantic release
