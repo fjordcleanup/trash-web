@@ -1,4 +1,5 @@
 import { Ago } from '#components/Ago.tsx'
+
 import './Footer.css'
 
 const CopyrightYear = () => {
@@ -8,7 +9,7 @@ const CopyrightYear = () => {
 }
 
 export const Footer = () => (
-	<footer class="mt-4">
+	<footer class="mt-4 page-footer">
 		<main>
 			<span class="copyright">
 				© <CopyrightYear />{' '}
