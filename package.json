@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@bifravst/from-env": "3.0.2",
-    "@coderbyheart/aws-dynamodb-es-cqrs": "1.0.3",
+    "@coderbyheart/aws-dynamodb-es-cqrs": "1.1.0",
     "@fjordcleanup/trash-proto": "npm:@jsr/fjordcleanup__trash-proto@1.1.0",
     "@sinclair/typebox": "0.34.40",
     "@smithy/protocol-http": "5.1.3",
