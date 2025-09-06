@@ -80,10 +80,14 @@ export const ReportMap = ({
 				},
 			).addTo(map)
 		} else {
-			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				attribution:
-					'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-			}).addTo(map)
+			// Add Norgeskart layers («topografisk kart»)
+			L.tileLayer(
+				'https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png',
+				{
+					attribution:
+						'&copy; <a href="http://www.kartverket.no/">Kartverket</a>',
+				},
+			).addTo(map)
 		}
 
 		map.whenReady(() => {
