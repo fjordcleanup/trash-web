@@ -1,16 +1,16 @@
-import type { LngLat } from 'maplibre-gl'
+import type { LatLng } from 'leaflet'
 import { createContext, type ComponentChildren } from 'preact'
 import { useContext, useState } from 'preact/hooks'
 
 export const MapSettingsContext = createContext<{
-	setCenter: (location: LngLat) => void
-	center?: LngLat
+	setCenter: (location: LatLng) => void
+	center?: LatLng
 }>({
 	setCenter: () => {},
 })
 
 export const Provider = ({ children }: { children: ComponentChildren }) => {
-	const [location, setLocation] = useState<LngLat>()
+	const [location, setLocation] = useState<LatLng>()
 
 	return (
 		<MapSettingsContext.Provider

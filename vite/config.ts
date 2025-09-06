@@ -8,14 +8,14 @@ export const createConfig = ({
 	cognitoUserPoolURL,
 	cognitoUserPoolClientId,
 	cognitoIdentityPoolId,
-	mapAPIKey,
 	awsRegion,
+	leafletVersion,
 }: {
 	cognitoUserPoolURL: URL
 	cognitoUserPoolClientId: string
 	cognitoIdentityPoolId: string
-	mapAPIKey: string
 	awsRegion: string
+	leafletVersion: string
 	plugins?: PluginOption[]
 }): ReturnType<typeof defineConfig> => {
 	const define: Record<string, string> = {
@@ -25,8 +25,8 @@ export const createConfig = ({
 		COGNITO_USER_POOL_URL: JSON.stringify(cognitoUserPoolURL.toString()),
 		COGNITO_USER_POOL_CLIENT_ID: JSON.stringify(cognitoUserPoolClientId),
 		COGNITO_IDENTITY_POOL_ID: JSON.stringify(cognitoIdentityPoolId),
-		MAP_API_KEY: JSON.stringify(mapAPIKey),
 		AWS_REGION: JSON.stringify(awsRegion),
+		LEAFLET_VERSION: JSON.stringify(leafletVersion),
 	}
 	for (const [k, v] of Object.entries(define)) {
 		console.debug(`[vite define] ${k}:`, v)
