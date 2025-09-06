@@ -1,5 +1,5 @@
 import * as L from 'leaflet'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
 
 import 'leaflet/dist/leaflet.css'
 import { Hourglass, Locate, Map, Satellite } from 'lucide-preact'
@@ -27,17 +27,21 @@ export const ReportMap = ({
 		setStyle(style === 'Satellite' ? 'Topographic' : 'Satellite')
 	}
 
-	const centerOnUserLocation = () => {
-		if (!mapInstance) return
+	const centerOnUserLocation = useMemo(
+		() => () => {
+			if (!mapInstance) return
+			if (!('geolocation' in navigator)) {
+				alert('Geolocation is not supported by this browser.')
+				return
+			}
 
-		setIsLocating(true)
+			setIsLocating(true)
 
-		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
 					const { latitude, longitude } = position.coords
 					const userLatLng = L.latLng(latitude, longitude)
-					mapInstance.setView(userLatLng, 15)
+					mapInstance.setView(userLatLng, zoom)
 					setIsLocating(false)
 				},
 				(error) => {
@@ -53,11 +57,9 @@ export const ReportMap = ({
 					maximumAge: 300000, // 5 minutes
 				},
 			)
-		} else {
-			setIsLocating(false)
-			alert('Geolocation is not supported by this browser.')
-		}
-	}
+		},
+		[mapInstance, zoom],
+	)
 
 	useEffect(() => {
 		if (containerRef.current === null) return
