@@ -38,6 +38,7 @@ export const Map = ({
 			],
 			zoom: defaultZoom,
 			keyboard: false,
+			maxZoom: 18,
 		})
 
 		// Add Norgeskart layers («topografisk kart»)
@@ -61,7 +62,6 @@ export const Map = ({
 		map.on('zoomend', () => {
 			const newZoom = Math.floor(map.getZoom())
 			if (newZoom !== zoom) {
-				console.debug(`[Map]`, `zoom changed`, newZoom)
 				setZoom(newZoom)
 			}
 		})

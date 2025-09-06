@@ -20,20 +20,26 @@ export const MiniMap = ({
 			keyboard: false,
 			zoomControl: false,
 			attributionControl: false,
+			scrollWheelZoom: false,
+			dragging: false,
+			touchZoom: false,
+			doubleClickZoom: false,
+			boxZoom: false,
 		})
 
-		// Add OpenStreetMap tile layer
-		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			attribution:
-				'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-		}).addTo(map)
+		// Add Norgeskart layers («topografisk kart»)
+		L.tileLayer(
+			'https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png',
+			{
+				attribution:
+					'&copy; <a href="http://www.kartverket.no/">Kartverket</a>',
+			},
+		).addTo(map)
 
 		const marker = L.marker([markerLocation.lat, markerLocation.lng], {
 			icon: L.icon({
-				iconUrl:
-					'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-				shadowUrl:
-					'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+				iconUrl: `https://cdnjs.cloudflare.com/ajax/libs/leaflet/${LEAFLET_VERSION}/images/marker-icon.png`,
+				shadowUrl: `https://cdnjs.cloudflare.com/ajax/libs/leaflet/${LEAFLET_VERSION}/images/marker-shadow.png`,
 				iconSize: [25, 41],
 				iconAnchor: [12, 41],
 				popupAnchor: [1, -34],

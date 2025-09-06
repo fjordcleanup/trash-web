@@ -26,7 +26,6 @@ npm ci
 - `COGNITO_USER_POOL_URL`
 - `COGNITO_IDENTITY_POOL_ID`
 - `COGNITO_USER_POOL_CLIENT_ID`
-- `MAP_API_KEY`
 - `AWS_REGION`
 
 The production values can be seen in the
@@ -53,10 +52,6 @@ Provide these environment variables from the backend:
 - For the stack
   - `STACK_PREFIX` (e.g. `fjordcleanup-trash`)
   - `AWS_REGION` (e.g. `eu-north-1`)
-
-- For the map resources an
-  [AWS Location Maps API Key](https://docs.aws.amazon.com/location/latest/developerguide/using-apikeys.html)
-  - `MAP_API_KEY`
 
 - For Cognito
   - `COGNITO_USER_POOL_CLIENT_ID`

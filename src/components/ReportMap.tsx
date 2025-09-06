@@ -1,8 +1,8 @@
 import * as L from 'leaflet'
-import { Locate, Map, Satellite } from 'lucide-preact'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
 import 'leaflet/dist/leaflet.css'
+import { Hourglass, Locate, Map, Satellite } from 'lucide-preact'
 import './ReportMap.css'
 
 export const ReportMap = ({
@@ -14,13 +14,50 @@ export const ReportMap = ({
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [mapInstance, setMap] = useState<L.Map>()
-	const [style, setStyle] = useState<'Satellite' | 'Standard'>('Standard')
+	const [style, setStyle] = useState<'Satellite' | 'Topographic'>('Topographic')
 	const [zoom, setZoom] = useState(13)
 	const [center, setCenter] = useState<L.LatLngExpression>(
 		markerLocation
 			? [markerLocation.lat, markerLocation.lng]
 			: [59.905900733292235, 10.7496181292028],
 	)
+	const [isLocating, setIsLocating] = useState(false)
+
+	const toggleMapStyle = () => {
+		setStyle(style === 'Satellite' ? 'Topographic' : 'Satellite')
+	}
+
+	const centerOnUserLocation = () => {
+		if (!mapInstance) return
+
+		setIsLocating(true)
+
+		if ('geolocation' in navigator) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const { latitude, longitude } = position.coords
+					const userLatLng = L.latLng(latitude, longitude)
+					mapInstance.setView(userLatLng, 15)
+					setIsLocating(false)
+				},
+				(error) => {
+					console.error('Error getting user location:', error)
+					setIsLocating(false)
+					alert(
+						'Unable to get your location. Please ensure location services are enabled.',
+					)
+				},
+				{
+					enableHighAccuracy: true,
+					timeout: 10000,
+					maximumAge: 300000, // 5 minutes
+				},
+			)
+		} else {
+			setIsLocating(false)
+			alert('Geolocation is not supported by this browser.')
+		}
+	}
 
 	useEffect(() => {
 		if (containerRef.current === null) return
@@ -84,10 +121,8 @@ export const ReportMap = ({
 		const marker = L.marker([markerLocation.lat, markerLocation.lng], {
 			draggable: true,
 			icon: L.icon({
-				iconUrl:
-					'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-				shadowUrl:
-					'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+				iconUrl: `https://cdnjs.cloudflare.com/ajax/libs/leaflet/${LEAFLET_VERSION}/images/marker-icon.png`,
+				shadowUrl: `https://cdnjs.cloudflare.com/ajax/libs/leaflet/${LEAFLET_VERSION}/images/marker-shadow.png`,
 				iconSize: [25, 41],
 				iconAnchor: [12, 41],
 				popupAnchor: [1, -34],
@@ -110,53 +145,23 @@ export const ReportMap = ({
 	return (
 		<div id="reportMapContainer">
 			<div id="reportMap" ref={containerRef} />
-			<nav>
-				{style === 'Satellite' ? (
-					<button
-						type="button"
-						class="btn btn-secondary d-flex align-items-center flex-column"
-						onClick={() => setStyle('Standard')}
-						title="Terrain view"
-					>
-						<Map />
-					</button>
-				) : (
-					<button
-						type="button"
-						class="btn btn-secondary d-flex align-items-center flex-column"
-						onClick={() => setStyle('Satellite')}
-						title="Satellite view"
-					>
-						<Satellite />
-					</button>
-				)}
-
-				{navigator.geolocation !== undefined && (
-					<button
-						type="button"
-						class="btn btn-secondary d-flex align-items-center flex-column mt-2"
-						onClick={() => {
-							navigator.geolocation.getCurrentPosition(
-								(position) => {
-									const { latitude, longitude } = position.coords
-									mapInstance?.flyTo([latitude, longitude])
-									setCenter([latitude, longitude])
-								},
-								(error) => {
-									console.error('Error getting location:', error.message)
-									alert(
-										'Unable to retrieve your location. Please ensure location access is enabled.',
-									)
-								},
-								{ enableHighAccuracy: true },
-							)
-						}}
-						title="Locate me"
-					>
-						<Locate />
-					</button>
-				)}
-			</nav>
+			<div className="map-controls">
+				<button
+					className="map-control-button"
+					onClick={toggleMapStyle}
+					type="button"
+				>
+					{style === 'Satellite' ? <Satellite /> : <Map />}
+				</button>
+				<button
+					className="map-control-button"
+					onClick={centerOnUserLocation}
+					disabled={isLocating}
+					type="button"
+				>
+					{isLocating ? <Hourglass /> : <Locate />}
+				</button>
+			</div>
 		</div>
 	)
 }
