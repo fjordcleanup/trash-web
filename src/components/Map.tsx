@@ -2,17 +2,12 @@ import { useMapSettings } from '#context/MapSettings.tsx'
 import { useReports } from '#context/Reports.tsx'
 import { shortId, TrashType } from '@fjordcleanup/trash-proto'
 import cx from 'classnames'
-import maplibregl from 'maplibre-gl'
+import * as L from 'leaflet'
 import { route } from 'preact-router'
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
 
-import 'maplibre-gl/dist/maplibre-gl.css'
+import 'leaflet/dist/leaflet.css'
 import './Map.css'
-
-const apiKey = MAP_API_KEY
-const region = AWS_REGION
-const style = 'Standard'
-const colorScheme = 'Light'
 
 const isLandscape = () => window.innerWidth > window.innerHeight
 
@@ -27,7 +22,7 @@ export const Map = ({
 	const initialized = useRef<boolean>(false)
 	const settings = useMapSettings()
 	const { reports } = useReports()
-	const [mapInstance, setMap] = useState<maplibregl.Map>()
+	const [mapInstance, setMap] = useState<L.Map>()
 	const defaultZoom = useMemo(() => (isLandscape() ? 12 : 10), [])
 	const [zoom, setZoom] = useState<number>(defaultZoom)
 
@@ -36,22 +31,25 @@ export const Map = ({
 		if (initialized.current) return
 		initialized.current = true
 
-		const map = new maplibregl.Map({
-			container: containerRef.current,
-			center: center ??
-				settings.center ?? {
-					lng: 10.7496181292028,
-					lat: 59.905900733292235,
-				},
+		const map = L.map(containerRef.current, {
+			center: [
+				center?.lat ?? settings.center?.lat ?? 59.905900733292235,
+				center?.lng ?? settings.center?.lng ?? 10.7496181292028,
+			],
 			zoom: defaultZoom,
-			style: `https://maps.geo.${region}.amazonaws.com/v2/styles/${style}/descriptor?key=${apiKey}&color-scheme=${colorScheme}`,
-			refreshExpiredTiles: false,
-			trackResize: true,
 			keyboard: false,
-			renderWorldCopies: false,
 		})
 
-		map.on('load', () => {
+		// Add Norgeskart layers («topografisk kart»)
+		L.tileLayer(
+			'https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png',
+			{
+				attribution:
+					'&copy; <a href="http://www.kartverket.no/">Kartverket</a>',
+			},
+		).addTo(map)
+
+		map.whenReady(() => {
 			console.debug(`[Map]`, `loaded`)
 			setMap(map)
 		})
@@ -77,18 +75,11 @@ export const Map = ({
 
 	useEffect(() => {
 		if (mapInstance === undefined) return
-		const markers: Array<maplibregl.Marker> = []
+		const markers: Array<L.Marker> = []
 
 		for (const report of reports) {
 			const el = document.createElement('div')
 			el.className = 'trash-marker'
-
-			el.addEventListener('click', (ev) => {
-				ev.stopPropagation()
-				ev.preventDefault()
-				if (report.$meta.id === undefined) return
-				route(`/map/${report.$meta.id}`)
-			})
 
 			const escooterEl = document.createElement('div')
 			escooterEl.className = report.type.includes(TrashType.Escooter)
@@ -119,9 +110,21 @@ export const Map = ({
 			el.appendChild(titleEl)
 
 			// add marker to map
-			const marker = new maplibregl.Marker({ element: el })
-				.setLngLat([report.location.lng, report.location.lat])
-				.addTo(mapInstance)
+			const marker = L.marker([report.location.lat, report.location.lng], {
+				icon: L.divIcon({
+					html: el.outerHTML,
+					className: 'custom-div-icon',
+					iconSize: [24, 24],
+					iconAnchor: [12, 12],
+				}),
+			}).addTo(mapInstance)
+
+			// Handle click event
+			marker.on('click', (ev: L.LeafletMouseEvent) => {
+				L.DomEvent.stopPropagation(ev)
+				if (report.$meta.id === undefined) return
+				route(`/map/${report.$meta.id}`)
+			})
 
 			markers.push(marker)
 		}

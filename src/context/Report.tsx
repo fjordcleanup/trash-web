@@ -1,6 +1,6 @@
 import type { ULID } from '@coderbyheart/aws-dynamodb-es-cqrs/event'
 import type { TrashType } from '@fjordcleanup/trash-proto'
-import type { LngLat } from 'maplibre-gl'
+import type { LatLng } from 'leaflet'
 import { createContext, type ComponentChildren } from 'preact'
 import { useContext, useMemo, useState } from 'preact/hooks'
 import { useAuth } from './Auth.tsx'
@@ -9,8 +9,8 @@ const PHOTO_LIMIT = 2
 
 export const ReportContext = createContext<{
 	photoLimit: number
-	location?: LngLat
-	setLocation: (args: LngLat) => void
+	location?: LatLng
+	setLocation: (args: LatLng) => void
 	photos: Blob[]
 	setPhotos: (args: Blob[]) => void
 	addPhoto: (photo: Blob) => void
@@ -42,7 +42,7 @@ export const ReportContext = createContext<{
 
 export const Provider = ({ children }: { children: ComponentChildren }) => {
 	const { user } = useAuth()
-	const [location, setLocation] = useState<LngLat>()
+	const [location, setLocation] = useState<LatLng>()
 	const [photos, setPhotos] = useState<Blob[]>([])
 	const [description, setDescription] = useState<string | undefined>(undefined)
 	const [trashType, setTrashType] = useState<Array<TrashType>>([])

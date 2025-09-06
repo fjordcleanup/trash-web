@@ -6,6 +6,12 @@
   top: 50px;
 }
 
+/* Leaflet custom div icon styles */
+.custom-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
 .trash-marker {
   background-color: #999;
   transform: rotate(45deg);
