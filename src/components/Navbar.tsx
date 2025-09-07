@@ -2,6 +2,7 @@ import { useAuth } from '#context/Auth.tsx'
 import {
 	HelpCircle,
 	Home,
+	KeyIcon,
 	LogIn,
 	LogOut,
 	Menu,
@@ -67,6 +68,23 @@ const Nav = () => {
 								<UserRoleIcon isAdmin={auth.isAdmin} />
 								{name ?? email}
 							</div>
+							{/* /passkeys/add?client_id=example_client_id&redirect_uri=https://www.example.com */}
+							<a
+								class="d-flex align-items-center"
+								title="set up passkey"
+								href={`https://auth.accounts.fjordcleanup.org/passkeys/add?${new URLSearchParams(
+									{
+										client_id: COGNITO_USER_POOL_CLIENT_ID,
+										redirect_uri:
+											document.location.protocol +
+											'//' +
+											document.location.host +
+											'/auth/callback',
+									},
+								).toString()}`}
+							>
+								<KeyIcon class="me-1" />
+							</a>
 							<button
 								type="button"
 								class="btn btn-outline-danger"
@@ -126,6 +144,21 @@ const Nav = () => {
 										<UserRoleIcon isAdmin={auth.isAdmin} />
 										{name ?? email}
 									</div>
+									<a
+										class="d-flex align-items-center p-2 pb-4"
+										href={`https://auth.accounts.fjordcleanup.org/passkeys/add?${new URLSearchParams(
+											{
+												client_id: COGNITO_USER_POOL_CLIENT_ID,
+												redirect_uri:
+													document.location.protocol +
+													'//' +
+													document.location.host +
+													'/auth/callback',
+											},
+										).toString()}`}
+									>
+										<KeyIcon class="me-1" /> set up passkey
+									</a>
 									<button
 										type="button"
 										class="btn btn-outline-danger mobile-auth-btn"
