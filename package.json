@@ -40,8 +40,8 @@
     "ulidx": "2.4.1"
   },
   "devDependencies": {
-    "@aws-sdk/client-cloudformation": "3.919.0",
-    "@aws-sdk/client-cloudfront": "3.919.0",
+    "@aws-sdk/client-cloudformation": "3.920.0",
+    "@aws-sdk/client-cloudfront": "3.920.0",
     "@babel/plugin-syntax-import-assertions": "7.27.1",
     "@bifravst/cloudformation-helpers": "9.1.1",
     "@bifravst/eslint-config-typescript": "6.4.4",
