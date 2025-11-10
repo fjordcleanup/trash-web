@@ -31,7 +31,7 @@
     "bootstrap": "5.3.8",
     "classnames": "2.5.1",
     "date-fns": "4.1.0",
-    "lucide-preact": "0.552.0",
+    "lucide-preact": "0.553.0",
     "leaflet": "1.9.4",
     "oidc-client-ts": "3.3.0",
     "preact": "10.27.2",
