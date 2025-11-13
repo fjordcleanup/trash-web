@@ -33,7 +33,7 @@
     "date-fns": "4.1.0",
     "lucide-preact": "0.553.0",
     "leaflet": "1.9.4",
-    "oidc-client-ts": "3.3.0",
+    "oidc-client-ts": "3.4.0",
     "preact": "10.27.2",
     "preact-router": "4.1.2",
     "proj4": "2.19.10",
