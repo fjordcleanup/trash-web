@@ -27,7 +27,7 @@
     "@sinclair/typebox": "0.34.41",
     "@smithy/protocol-http": "5.3.5",
     "@smithy/signature-v4": "5.3.5",
-    "@smithy/types": "4.9.0",
+    "@smithy/types": "4.10.0",
     "bootstrap": "5.3.8",
     "classnames": "2.5.1",
     "date-fns": "4.1.0",
