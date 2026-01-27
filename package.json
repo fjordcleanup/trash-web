@@ -24,7 +24,7 @@
     "@bifravst/from-env": "3.0.2",
     "@coderbyheart/aws-dynamodb-es-cqrs": "1.3.0",
     "@fjordcleanup/trash-proto": "npm:@jsr/fjordcleanup__trash-proto@1.1.4",
-    "@sinclair/typebox": "0.34.47",
+    "@sinclair/typebox": "0.34.48",
     "@smithy/protocol-http": "5.3.8",
     "@smithy/signature-v4": "5.3.8",
     "@smithy/types": "4.12.0",
