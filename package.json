@@ -26,7 +26,7 @@
     "@fjordcleanup/trash-proto": "npm:@jsr/fjordcleanup__trash-proto@1.1.4",
     "@sinclair/typebox": "0.34.48",
     "@smithy/protocol-http": "5.3.12",
-    "@smithy/signature-v4": "5.3.11",
+    "@smithy/signature-v4": "5.3.12",
     "@smithy/types": "4.13.0",
     "bootstrap": "5.3.8",
     "classnames": "2.5.1",
