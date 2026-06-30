@@ -82,7 +82,7 @@ jobs:
           sudo ./aws/install --update
 
       - name: configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v5
+        uses: aws-actions/configure-aws-credentials@254c19bd240aabef8777f48595e9d2d7b972184b # v6.2.1
         with:
           role-to-assume: |-
             arn:aws:iam::${{ env.ACCOUNT_ID }}:role/${{ env.HOSTING_STACK_NAME }}-web-app-cd
