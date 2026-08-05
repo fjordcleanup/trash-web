@@ -49,7 +49,7 @@
     "@commitlint/config-conventional": "19.8.1",
     "@preact/preset-vite": "2.10.6",
     "@types/node": "24.9.0",
-    "@types/leaflet": "1.9.21",
+    "@types/leaflet": "1.9.22",
     "commitlint": "19.8.1",
     "glob": "11.1.0",
     "handlebars": "4.7.9",
