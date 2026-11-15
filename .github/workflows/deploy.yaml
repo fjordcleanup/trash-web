@@ -114,8 +114,7 @@ jobs:
           # HTML files and .well-known/ to 10 minutes
           aws s3 cp s3://${{ env.BUCKET_NAME }} s3://${{ env.BUCKET_NAME }} --exclude "*" --include "*.html" --include ".well-known/*" --recursive --cache-control max-age=600,public --content-type "text/html; charset=UTF-8"
 
-      - name:
-          Trigger CloudFront cache invalidation for fixed resources (all other
+      - name: Trigger CloudFront cache invalidation for fixed resources (all other
           files have unique names)
         run: |
           node --no-warnings --experimental-transform-types .github/workflows/invalidate-cloudfront.ts

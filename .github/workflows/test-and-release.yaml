@@ -51,11 +51,11 @@ jobs:
       - name: Compile TypeScript
         run: npx tsc
 
-      - name: Check source code with eslint
-        run: npx eslint ./
+      - name: Check source code with oxlint
+        run: npx oxlint ./
 
       - name: Check if source code is properly formatted
-        run: npx prettier -c ./
+        run: npx oxfmt --check
 
       - name: Run tests
         run: npm test
@@ -83,8 +83,7 @@ jobs:
         run: npx semantic-release
 
       - name: Trigger deployment workflow
-        if:
-          steps.semantic-release.outcome == 'success' && env.RELEASE_VERSION
+        if: steps.semantic-release.outcome == 'success' && env.RELEASE_VERSION
           !=  ''
         run: |
           gh workflow run --ref saga deploy.yaml -F ref=${{ github.sha }}

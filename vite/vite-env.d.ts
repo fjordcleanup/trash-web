@@ -10,7 +10,7 @@ declare const COGNITO_USER_POOL_CLIENT_ID: string
 declare const AWS_REGION: string
 declare const LEAFLET_VERSION: string
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+// oxlint-disable-next-line typescript/consistent-type-definitions
 interface ImportMeta {
-	readonly env: ImportMetaEnv
+  readonly env: ImportMetaEnv
 }
