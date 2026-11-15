@@ -21,15 +21,14 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     "allowImportingTsExtensions": true,
-    "baseUrl": ".",
     "paths": {
-      "react": ["node_modules/preact/compat/"],
-      "react-dom": ["node_modules/preact/compat/"],
-      "#components/*": ["src/components/*"],
-      "#context/*": ["src/context/*"],
-      "#page/*": ["src/page/*"],
-      "#icons/*": ["src/icons/*"],
-      "#api/*": ["src/api/*"]
+      "react": ["./node_modules/preact/compat/"],
+      "react-dom": ["./node_modules/preact/compat/"],
+      "#components/*": ["./src/components/*"],
+      "#context/*": ["./src/context/*"],
+      "#page/*": ["./src/page/*"],
+      "#icons/*": ["./src/icons/*"],
+      "#api/*": ["./src/api/*"]
     }
   },
   "include": [
