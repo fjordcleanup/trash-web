@@ -43,7 +43,7 @@
     "@aws-sdk/client-cloudformation": "3.1161.0",
     "@aws-sdk/client-cloudfront": "3.1161.0",
     "@babel/plugin-syntax-import-assertions": "7.29.7",
-    "@bifravst/cloudformation-helpers": "9.1.1",
+    "@bifravst/cloudformation-helpers": "10.0.3",
     "@coderbyheart/oxlint-config": "1.0.1",
     "@commitlint/config-conventional": "19.8.1",
     "@preact/preset-vite": "2.10.6",
