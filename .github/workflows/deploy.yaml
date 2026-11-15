@@ -52,8 +52,11 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version: "22.x"
+          node-version: ">=26.13.1 <27"
           cache: "npm"
+
+      - name: Install NPM version specified in package.json
+        uses: ./.github/actions/install-npm
 
       - name: Install dependencies
         run: npm ci --no-audit
@@ -117,4 +120,4 @@ jobs:
       - name: Trigger CloudFront cache invalidation for fixed resources (all other
           files have unique names)
         run: |
-          node --no-warnings --experimental-transform-types .github/workflows/invalidate-cloudfront.ts
+          node --no-warnings .github/workflows/invalidate-cloudfront.ts
