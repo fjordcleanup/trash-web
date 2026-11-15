@@ -13,6 +13,14 @@ This is the web application that is served on
 The backend source can be found in
 [trash](https://github.com/fjordcleanup/trash)
 
+## Node & NPM
+
+This project requires Node.js `>=26.13.1 <27` and npm `>=12.2.2 <13` (enforced
+via `check-node-version` on `npm install` and `npm ci`). The check is skipped
+during `npm publish` and `npm pack`, because `semantic-release` bundles its own
+npm (`@semantic-release/npm` depends on `npm@^11.6.2`) and runs the publish with
+that version rather than the one installed in CI.
+
 ## Setup
 
 Install the dependencies:
