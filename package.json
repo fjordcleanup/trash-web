@@ -34,7 +34,7 @@
     "leaflet": "1.9.4",
     "lucide-preact": "0.577.0",
     "oidc-client-ts": "3.5.0",
-    "preact": "10.29.8",
+    "preact": "11.2.0",
     "preact-router": "4.1.2",
     "proj4": "2.23.0",
     "ulidx": "2.4.1"
