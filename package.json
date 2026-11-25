@@ -52,7 +52,7 @@
     "chalk": "5.6.2",
     "check-node-version": "4.2.1",
     "commitlint": "21.2.4",
-    "glob": "11.1.0",
+    "glob": "14.0.6",
     "handlebars": "4.7.10",
     "husky": "9.1.7",
     "lint-staged": "16.4.0",
