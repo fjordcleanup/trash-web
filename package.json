@@ -58,7 +58,7 @@
     "lint-staged": "16.4.0",
     "oxfmt": "0.80.0",
     "oxlint": "1.95.0",
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "vite": "7.3.8"
   },
   "lint-staged": {
